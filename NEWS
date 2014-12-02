@@ -1,0 +1,61 @@
+0.14 - 2014-09-23
+[Ko van der Sloot]
+ * fixed make 'distcheck', store intermediate results in /tmp
+ * release
+
+0.13 lost in transition
+
+0.12 - 2013-04-04
+ * depends on ticcutils now
+ * some cleanup in configure.ac
+
+0.11 -2011-12-22
+ * Added a test for 'make check'
+ * use standard exit codes (EXIT_FAILURE/EXIT_SUCCES)
+
+0.10 -2011-08-30
+* CNTS ==> CLiPS
+* some more decapping
+
+0.9 - 2011-03-21
+
+[ Ko van der Sloot]
+* decapped to dimbl
+
+0.8 - 2011-02-15
+
+[ Antal van den Bosch ]
+* m4/openmp.m4: added
+* configure.ac: changed openmp check to the one in Frog
+
+[ Joost van Baal ]
+* Makefile.am: do not install ChangeLog
+
+[ Ko van der Sloot ]
+* docs/Dimbl.1: Added man page
+
+
+0.7 - 2010-06-02
+
+[ Ko van der Sloot ]
+* See ChangeLog
+
+
+0.4 - 2009-01-12
+
+[ Ko van der Sloot ]
+* 2008-06-09 Fixed Dimpl (openMP version)
+* 2008-06-02 we use SVN now!
+
+
+0.3 - 2008-04-04
+
+[ Ko van der Sloot ]
+* See ChangeLog
+
+
+0.2-beta - 2008-03-01
+
+[ Ko van der Sloot ]
+* 2007-12-03 Finished packaging (for now)
+* 2007-10-03 Started packaging

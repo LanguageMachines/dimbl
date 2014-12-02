@@ -1,0 +1,67 @@
+.TH dimbl 1 "2010 december 09"
+
+.SH NAME
+dimbl - Distributed Timbl
+.SH SYNOPSYS
+dimbl [timbl options] [-S <num of threads>]
+
+.SH DESCRIPTION
+dimbl extends 
+.B timbl
+with the possibility to run the classification task on multiple threads.
+This is done by splitting up the Instancebase in parts that are handled in 
+parallel. Every test instance is tested against each partial Instancebase.
+The results are merged and then the k Nearest Neighbours are calculated.
+
+.SH NOTES
+dimbl only works for the IB1 variants of timbl.
+
+Not all timbl options are fully supported. 
+
+Documentation is lacking.
+
+.SH OPTIONS
+
+.B -S
+<threads>
+.RS
+run the server on 'threads' parallel threads. 
+.RE
+
+all
+.B timbl
+options are documenented in
+.BR timbl (1)
+
+dimbl handles most of them in the same way as
+.B timbl
+except for
+
+.BR -i " filename"
+
+and
+
+.BR -I " filename"
+
+.B -I
+will create 'threads' Instancebase files and store their names in 'filename' 
+together with the name of the weighting file.
+
+.B -i
+will use such a file to read back in 'threads' Instancebases for a classifying
+task. The 
+.B -S
+option is ignored in that case.
+.B dimbl
+will use the number of files found in 'filename'.
+
+.SH BUGS
+possibly
+
+.SH AUTHORS
+Ko van der Sloot Timbl@uvt.nl
+
+Antal van den Bosch Timbl@uvt.nl
+
+.SH SEE ALSO
+.BR timbl (1)

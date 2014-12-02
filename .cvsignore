@@ -1,0 +1,10 @@
+libtool
+aclocal.m4
+autom4te.cache
+Makefile.in
+Makefile
+dimin.train*
+dimin.train*
+dimin.test*
+config*
+README2
