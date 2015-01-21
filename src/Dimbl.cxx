@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 1998 - 2014
+  Copyright (c) 1998 - 2015
   ILK   - Tilburg University
   CLiPS - University of Antwerp
 
@@ -306,7 +306,7 @@ void usage(){
 }
 
 int main(int argc, char *argv[]) {
-  cerr << "dimbl " << VERSION << " (c) ILK 1998 - 2014" << endl;
+  cerr << "dimbl " << VERSION << " (c) ILK 1998 - 2015" << endl;
   cerr << "Induction of Linguistic Knowledge Research Group, Tilburg University" << endl;
   cerr << "based on [" << Timbl::VersionName() << "]" << endl;
   if ( argc < 2 ){
