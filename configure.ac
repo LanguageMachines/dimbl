@@ -34,8 +34,14 @@ AC_LANG([C++])
 AC_CHECK_HEADERS([sys/time.h])
 
 # check for OpenMP
-OPENMP_CHECK( [CXXFLAGS="$CXXFLAGS $OPENMP_CXXFLAGS"],
-	      [AC_MSG_ERROR([We need OpenMP, please use a recent compiler!])])
+AC_OPENMP
+if test "x$ac_cv_prog_cxx_openmp" != "xunsupported"; then
+   CXXFLAGS="$CXXFLAGS $OPENMP_CXXFLAGS"
+   AC_DEFINE(HAVE_OPENMP, 1 , Define to 1 if you have OpenMP )
+else
+   AC_MSG_ERROR(We need OpenMP. use a decent compiler.)
+fi
+
 
 PKG_PROG_PKG_CONFIG
 AC_PATH_PROG(pkgconfigpath, pkg-config, NONE)
