@@ -42,7 +42,7 @@ class mp_worker: public worker {
 public:
   bool Init( TimblAPI *, const string&, const string&, int );
   bool writeTree( const string& );
-  bool readTree( TimblOpts&, const string&, const string&, int );
+  bool readTree( const TiCC::CL_Options&, const string&, const string&, int );
   bool Execute( const string & );
 };
 
@@ -88,12 +88,12 @@ bool mp_worker::Execute( const string& line ){
   return true;
 }
 
-bool mp_worker::readTree( TimblOpts& opts,
+bool mp_worker::readTree( const TiCC::CL_Options& opts,
 			  const string& name,
 			  const string& wfName,
 			  int i ){
   bool ok = false;
-  exp = new TimblAPI( &opts );
+  exp = new TimblAPI( opts );
   cnt = i;
 #if DEBUG > 0
 #pragma omp critical
@@ -229,7 +229,7 @@ bool experiment<mp_worker>::createWorkerFiles(){
 }
 
 template <>
-bool experiment<mp_worker>::createWorkersFromFile( TimblOpts& opts ){
+bool experiment<mp_worker>::createWorkersFromFile( const TiCC::CL_Options& opts ){
   ifstream is( config.treeInFileName.c_str() );
   if ( !is ){
     cerr << "unable to read file: " << config.treeInFileName << endl;
@@ -314,29 +314,28 @@ int main(int argc, char *argv[]) {
     return EXIT_SUCCESS;
   }
   try {
-    TimblOpts Opts( argc, argv );
-    bool mood;
+    TiCC::CL_Options opts;
+    opts.init( argc, argv ); // we don't check the arguments for now
     string value;
-    if ( Opts.Find( 'h', value, mood ) ){
+    if ( opts.is_present( 'h' ) ){
       usage();
       return EXIT_SUCCESS;
     }
-    if ( Opts.Find( 'V', value, mood ) ||
-	 Opts.Find( "version", value, mood ) ){
+    if ( opts.is_present( 'V' ) || opts.is_present( "version" ) ){
       return EXIT_SUCCESS;
     }
-    experiment<mp_worker> theExp( Opts );
+    experiment<mp_worker> theExp( opts );
     if ( !theExp.config.treeInFileName.empty() ){
       if ( !theExp.config.treeOutFileName.empty() ){
 	cerr << "both -i and -I specified! That is impossible to handle"
 	     << endl;
 	return EXIT_FAILURE;
       }
-      if ( !theExp.createWorkersFromFile( Opts ) )
+      if ( !theExp.createWorkersFromFile( opts ) )
 	return EXIT_FAILURE;
     }
     else {
-      theExp.Train( Opts );
+      theExp.Train( opts );
       if ( !theExp.config.treeOutFileName.empty() ){
 	theExp.createWorkerFiles();
 	cout << "done." << endl;

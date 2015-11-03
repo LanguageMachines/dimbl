@@ -35,7 +35,7 @@
 
 class settings {
  public:
-  settings( Timbl::TimblOpts& );
+  settings( TiCC::CL_Options& );
   ~settings(){ delete distanceMetric; };
   bool ok() const { return status; };
   int numThreads;
@@ -87,7 +87,7 @@ void time_stamp( std::ostream&, const std::string&, int = -1 );
 template <class working>
 class experiment {
  public:
- experiment( Timbl::TimblOpts& opts ): config( opts ){
+ experiment( TiCC::CL_Options& opts ): config( opts ){
     if ( !config.ok() ){
       throw std::runtime_error( "error in config" );
     }
@@ -97,9 +97,9 @@ class experiment {
     targets = 0;
   }
   virtual ~experiment();
-  bool Train( Timbl::TimblOpts& );
+  bool Train( const TiCC::CL_Options& );
   virtual bool createWorkers();
-  virtual bool createWorkersFromFile( Timbl::TimblOpts& );
+  virtual bool createWorkersFromFile( const TiCC::CL_Options& );
   virtual bool createWorkerFiles();
   Timbl::neighborSet Finalize();
   void showResult( Timbl::neighborSet&, const std::string& );
@@ -131,9 +131,9 @@ experiment<working>::~experiment() {
 }
 
 template <class working>
-bool experiment<working>::Train( Timbl::TimblOpts& opts ){
+bool experiment<working>::Train( const TiCC::CL_Options& opts ){
   bool ok = true;
-  train = new Timbl::TimblAPI( &opts, "train" );
+  train = new Timbl::TimblAPI( opts, "train" );
   if ( !train ){
     throw std::runtime_error( "training failed" );
   }

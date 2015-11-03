@@ -72,7 +72,7 @@ void split( const string& file, int num, const string& tmpdir ){
   }
 }
 
-settings::settings( TimblOpts& Opts ){
+settings::settings( TiCC::CL_Options& opts ){
   status = true;
   wFileSpecified=false;
   distanceMetric = 0;
@@ -90,70 +90,59 @@ settings::settings( TimblOpts& Opts ){
   IF = UnknownInputFormat;
   tmpdir = "/tmp/";
   keepfiles = false;
-  bool mood;
   string value;
-  if ( Opts.Find( 'a', value, mood ) ){
+  if ( opts.is_present( 'a', value ) ){
     Algorithm tst;
     if ( !string_to(value,tst) || tst != IB1 ){
       cerr << "unsupported algorithm. only IB1 is possible!" << endl;
       status = false;
     }
   }
-  if ( Opts.Find( 'S', value, mood ) ){
+  if ( opts.extract( 'S', value ) ){
     numThreads = stringTo<int>( value );
-    Opts.Delete( 'S' );
   }
-  if ( Opts.Find( 'k', value, mood ) ){
+  if ( opts.extract( 'k', value ) ){
     nn = stringTo<int>(value) + 1;
-    Opts.Delete( 'k' );
   }
-  Opts.Add( 'k', toString<int>( nn ), true );
-  if ( Opts.Find( "Beam", value, mood ) ){
+  opts.insert( 'k', toString<int>( nn ), true );
+  if ( opts.extract( "Beam", value ) ){
     beam = stringTo<int>(value);
-    Opts.Delete( "Beam" );
   }
-  if ( Opts.Find( "tempdir", value, mood ) ){
+  if ( opts.extract( "tempdir", value ) ){
     tmpdir = value;
     if ( !tmpdir.empty() && tmpdir[tmpdir.length()-1] != '/' ){
       tmpdir += "/";
     }
   }
-  if ( Opts.Find( "keep", value, mood ) ){
+  if ( opts.extract( "keep", value ) ){
     keepfiles = true;
   }
-  if ( Opts.Find( 'e', value, mood ) ){
+  if ( opts.extract( 'e', value ) ){
     estimate = stringTo<int>(value);
-    Opts.Delete( 'e' );
   }
-  if ( Opts.Find( 'F', value, mood ) ){
+  if ( opts.is_present( 'F', value ) ){
     if ( !stringTo<InputFormatType>( value, IF ) ){
       cerr << "illegal value for -F option: " << value << endl;
       status = false;
     }
   }
-  if ( Opts.Find( 'p', value, mood ) ){
+  if ( opts.extract( 'p', value ) ){
     progress = stringTo<int>(value);
-    Opts.Delete( 'p' );
   }
-  if ( Opts.Find( 'f', value, mood ) ){
+  if ( opts.extract( 'f', value ) ){
     trainFileName = value;
-    Opts.Delete( 'f' );
   }
-  if ( Opts.Find( 't', value, mood ) ){
+  if ( opts.extract( 't', value ) ){
     testFileName = value;
-    Opts.Delete( 't' );
   }
-  if ( Opts.Find( 'i', value, mood ) ){
+  if ( opts.extract( 'i', value ) ){
     treeInFileName = value;
-    Opts.Delete( 'i' );
   }
-  if ( Opts.Find( 'I', value, mood ) ){
+  if ( opts.extract( 'I', value ) ){
     treeOutFileName = value;
-    Opts.Delete( 'I' );
   }
-  if ( Opts.Find( 'o', value, mood ) ){
+  if ( opts.extract( 'o', value ) ){
     outFileName = value;
-    Opts.Delete( 'o' );
   }
   else
     outFileName = testFileName + ".out";
@@ -167,7 +156,7 @@ settings::settings( TimblOpts& Opts ){
   }
   else {
     Weighting W = GR;
-    if ( Opts.Find( 'w', value, mood ) ){
+    if ( opts.is_present( 'w', value ) ){
       // user specified weighting
       if ( !string_to( value, W ) ){
 	// No valid weighting, so assume it also has a filename
@@ -181,14 +170,14 @@ settings::settings( TimblOpts& Opts ){
 	  if ( status ){
 	    weightsFileName = parts[0];
 	    wFileSpecified = true;
-	    Opts.Delete( 'w' );
+	    opts.remove( 'w' );
 	  }
 	}
 	else if ( num == 1 ){
 	  weightsFileName = value;
 	  wFileSpecified = true;
 	  W = GR;
-	  Opts.Delete( 'w' );
+	  opts.remove( 'w' );
 	}
 	else {
 	  cerr << "invalid weighting option: " << value << endl;
@@ -197,18 +186,18 @@ settings::settings( TimblOpts& Opts ){
       }
       else {
 	// valid Weight, but maybe a number, so replace anyway
-	Opts.Delete( 'w' );
+	opts.remove( 'w' );
       }
       if ( trainFileName.empty() && !weightsFileName.empty() ){
 	cerr << "a weights filename is specied. "
 	     << "That is incompatible with the -i option" << endl;
 	status = false;
       }
-      Opts.Add( 'w', to_string(W), false );
+      opts.insert( 'w', to_string(W), false );
     }
   }
   if ( status ) {
-    if ( Opts.Find( 'd', value, mood ) ){
+    if ( opts.extract( 'd', value ) ){
       // user specified distance metric
       DecayType decay = UnknownDecay;
       double decay_alfa = 1.0;
@@ -274,12 +263,12 @@ settings::settings( TimblOpts& Opts ){
 	default:
 	  cerr << "ignoring unknown decay" << toString( decay ) << endl;
 	}
-	Opts.Delete( 'd' );
       }
     }
   }
   if ( status ){
-    if ( Opts.Find( 'v', value, mood ) ){
+    bool mood;
+    if ( opts.extract( 'v', value, mood ) ){
       if ( value.find( "di" ) != string::npos )
 	do_distance = true;
       if ( value.find( "db" ) != string::npos )
@@ -296,9 +285,8 @@ settings::settings( TimblOpts& Opts ){
       }
       if ( value.find( "as" ) != string::npos )
 	do_advanced_stats = true;
-      Opts.Delete( 'v' );
     }
-    Opts.Add( 'v', "S", true );
+    opts.insert( 'v', "S", true );
     if ( treeOutFileName.empty() ){
       inp.open( testFileName.c_str() );
       if ( !inp ){
