@@ -42,5 +42,5 @@ Dependecies:
 To be able to succesfully build Dimbl from the tarball, you need the
 following pakages:
 - pkg-config
-- tiiccutils
+- ticcutils
 - timlb
