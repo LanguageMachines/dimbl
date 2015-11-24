@@ -1,6 +1,7 @@
-dimbl 0.9 (c) ILK/CLiPS 1998-2011
+dimbl 0.14 (c) CLS/ILK/CLiPS 1998-2015
 
-Distriibuted Tilburg Memory Based Learner
+Distributed Tilburg Memory Based Learner
+
 
 Induction of Linguistic Knowledge Research Group, Tilburg University and
 Centre for Dutch Language and Speech, University of Antwerp
@@ -8,9 +9,13 @@ Centre for Dutch Language and Speech, University of Antwerp
 This is the first release of dimbl
 
 this is realy a Beta version and it may still contain some bugs or
-behave not exactly as documented or expected. Comments and
-bug-reports are welcome at: Timbl@uvt.nl. Updates and more info
-may be found on our website: http://ilk.uvt.nl/ .
+behave not exactly as documented or expected.
+Comments and bug-reports are welcome at our issue tracker at
+https://github.com/LanguageMachines/dimbl/issues or by mailing
+lamasoftware (at) science.ru.nl.
+Updates and more info may be found on
+https://languagemachines.github.io/timbl .
+
 
 dimbl is distributed under the GNU Public Licence (see the file COPYING)
 
@@ -22,7 +27,7 @@ This software has been tested on:
 - APPLE running OSX 10.5
 
 Compilers:
-- GCC (4.1 - 4.4.1). The compiler MUST support OpenMP
+- GCC (4.7 - 5.2). The compiler MUST support OpenMP
 
 Contents of this distribution:
 - sources
@@ -34,10 +39,8 @@ Contents of this distribution:
 
 
 Dependecies:
-To be able to succesfully build Timbl from the tarball, you need the
+To be able to succesfully build Dimbl from the tarball, you need the
 following pakages:
 - pkg-config
-- timbl
-- libxml2-dev
-
-
+- tiiccutils
+- timlb
