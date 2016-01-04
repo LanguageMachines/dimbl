@@ -1,21 +1,16 @@
-dimbl 0.14 (c) CLS/ILK/CLiPS 1998-2015
+dimbl 0.16 (c) CLST/ILK/CLiPS 1998-2016
 
 Distributed Tilburg Memory Based Learner
 
-
+Centre for Language and Speech Technology, Radboud University,
 Induction of Linguistic Knowledge Research Group, Tilburg University and
 Centre for Dutch Language and Speech, University of Antwerp
 
-This is the first release of dimbl
-
-this is realy a Beta version and it may still contain some bugs or
-behave not exactly as documented or expected.
 Comments and bug-reports are welcome at our issue tracker at
 https://github.com/LanguageMachines/dimbl/issues or by mailing
 lamasoftware (at) science.ru.nl.
 Updates and more info may be found on
 https://languagemachines.github.io/timbl .
-
 
 dimbl is distributed under the GNU Public Licence (see the file COPYING)
 
