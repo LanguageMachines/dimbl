@@ -308,7 +308,8 @@ void usage(){
 }
 
 int main(int argc, char *argv[]) {
-  cerr << "dimbl " << VERSION << " (c) ILK 1998 - 2015" << endl;
+  cerr << "dimbl " << VERSION << " (c) CLST/ILK 1998 - 2016" << endl;
+  cerr << "Centre for Language and Speech Technology, Radboud University" << endl;
   cerr << "Induction of Linguistic Knowledge Research Group, Tilburg University" << endl;
   cerr << "based on [" << Timbl::VersionName() << "]" << endl;
   if ( argc < 2 ){
