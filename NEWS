@@ -1,3 +1,9 @@
+0.15 - 2016-01-14
+[Ko van der Sloot]
+ * repository moved to GitHub
+ * added Travis support
+ * depends on ticuutils now.
+
 0.14 - 2014-09-23
 [Ko van der Sloot]
  * fixed make 'distcheck', store intermediate results in /tmp

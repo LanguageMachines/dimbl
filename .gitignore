@@ -1,4 +1,5 @@
 INSTALL
+ChangeLog
 Makefile
 Makefile.in
 aclocal.m4
@@ -43,3 +44,4 @@ src/tst.sh.log
 src/tst.sh.trs
 stamp-h1
 test-driver
+*.tar.gz
