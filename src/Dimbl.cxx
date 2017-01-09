@@ -172,7 +172,7 @@ bool experiment<mp_worker>::createWorkerFiles(){
   children.resize( size );
   split( config.trainFileName, size, config.tmpdir );
   time_stamp( cout, "   start training "+ toString(size) + " children:" );
-  ofstream os( config.treeOutFileName.c_str() );
+  ofstream os( config.treeOutFileName );
   int i;
   vector<bool> ok(size,true);
 #pragma omp parallel private( i )
@@ -232,7 +232,7 @@ bool experiment<mp_worker>::createWorkerFiles(){
 
 template <>
 bool experiment<mp_worker>::createWorkersFromFile( const TiCC::CL_Options& opts ){
-  ifstream is( config.treeInFileName.c_str() );
+  ifstream is( config.treeInFileName );
   if ( !is ){
     cerr << "unable to read file: " << config.treeInFileName << endl;
     return false;
@@ -240,7 +240,7 @@ bool experiment<mp_worker>::createWorkersFromFile( const TiCC::CL_Options& opts 
   vector<string> filenames;
   string line;
   while ( getline( is, line ) ){
-    ifstream tmp( line.c_str() );
+    ifstream tmp( line );
     if ( !tmp ){
       cerr << "unable to read file: "<< line << endl;
       return false;
@@ -255,7 +255,7 @@ bool experiment<mp_worker>::createWorkersFromFile( const TiCC::CL_Options& opts 
   }
   else {
     wFile = filenames[size];
-    ifstream tmp( wFile.c_str() );
+    ifstream tmp( wFile );
     if ( !tmp ){
       cerr << "unable to read weightsfile: " << wFile << endl;
       return false;

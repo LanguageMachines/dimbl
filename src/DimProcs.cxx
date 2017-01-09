@@ -47,7 +47,7 @@ worker::~worker(){
 void split( const string& file, int num, const string& tmpdir ){
   int cnt=0;
   string line;
-  ifstream is( file.c_str() );
+  ifstream is( file );
   while ( getline( is, line ) )
     ++cnt;
   if ( cnt ){
@@ -56,7 +56,7 @@ void split( const string& file, int num, const string& tmpdir ){
     int to_do = cnt/num + 1;
     for ( int i=0; i < num; ++i ){
       string oname = tmpdir + TiCC::basename(file) + "-" + toString( i+1 );
-      ofstream os( oname.c_str() );
+      ofstream os( oname );
       if ( os ){
 	int done = 0;
 	while ( done < to_do &&
@@ -290,13 +290,13 @@ settings::settings( TiCC::CL_Options& opts ){
     }
     opts.insert( 'v', "S", true );
     if ( treeOutFileName.empty() ){
-      inp.open( testFileName.c_str() );
+      inp.open( testFileName );
       if ( !inp ){
 	cerr << "unable to open " << testFileName << endl;
 	status = false;
       }
     }
-    out.open( outFileName.c_str() );
+    out.open( outFileName );
     if ( !out ){
       cerr << "Unable to open outputfle " << outFileName << endl;
       status = false;
