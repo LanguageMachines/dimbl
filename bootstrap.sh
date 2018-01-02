@@ -1,6 +1,3 @@
-# $Id: bootstrap 8340 2011-02-15 18:38:07Z joostvb $
-# $URL: https://ilk.uvt.nl/svn/trunk/sources/Dimbl/trunk/bootstrap $
-
 # bootstrap - script to bootstrap the distribution rolling engine
 
 # usage:
@@ -96,4 +93,3 @@ AUTOMAKE=automake ACLOCAL=aclocal autoreconf --install \
 # aclocal-1.9 \
 #     && automake-1.9 --add-missing --verbose --gnu \
 #     && autoconf
-
