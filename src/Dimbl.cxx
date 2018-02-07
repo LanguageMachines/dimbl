@@ -29,8 +29,10 @@
 #include <vector>
 #include <cstdlib>
 #include <sys/time.h>
-#include <omp.h>
 #include <config.h>
+#ifdef HAVE_OPENMP
+#include <omp.h>
+#endif
 #include "timbl/TimblAPI.h"
 #include "dimbl/DimProcs.h"
 
@@ -53,10 +55,12 @@ bool mp_worker::Init( TimblAPI *pnt,
 		      const string& wfName, int i ){
   exp = pnt;
   cnt = i;
+#ifdef HAVE_OPENMP
 #if DEBUG > 0
 #pragma omp critical
   cerr << "starting worker[" << cnt << "], thread = "
        << omp_get_thread_num()+1 << "/" << omp_get_num_threads() << endl;
+#endif
 #endif
   bool ok = exp->Learn( fileName );
   if ( !ok ){
@@ -77,11 +81,13 @@ bool mp_worker::Init( TimblAPI *pnt,
 bool mp_worker::Execute( const string& line ){
   result = 0;
   if ( !line.empty() ){
+#ifdef HAVE_OPENMP
 #if DEBUG > 0
 #pragma omp critical
     cerr << "exp-" << cnt << " thread = "
 	 << omp_get_thread_num()+1 << "/" << omp_get_num_threads()
  	 << " classify '" << line << "'" << endl;
+#endif
 #endif
     result = exp->classifyNS( line );
     result->setShowDistance( true );
@@ -97,10 +103,12 @@ bool mp_worker::readTree( const TiCC::CL_Options& opts,
   bool ok = false;
   exp = new TimblAPI( opts );
   cnt = i;
+#ifdef HAVE_OPENMP
 #if DEBUG > 0
 #pragma omp critical
   cerr << "starting worker[" << cnt << "], thread = "
        << omp_get_thread_num()+1 << "/" << omp_get_num_threads() << endl;
+#endif
 #endif
   if ( exp->GetInstanceBase( name ) ){
     ok = exp->GetWeights( wfName, exp->CurrentWeighting() );
@@ -120,6 +128,7 @@ bool mp_worker::writeTree( const string& name ){
 template <>
 bool experiment<mp_worker>::createWorkers(){
   bool ok = true;
+#ifdef HAVE_OPENMP
   if ( size < 1 )
     size = omp_get_max_threads();
   else {
@@ -131,6 +140,10 @@ bool experiment<mp_worker>::createWorkers(){
       size = mt;
     }
   }
+#else
+  cerr << "couldn't get more then 1 thread. No OpenMP support. " << endl;
+  size = 1;
+#endif
   children.resize( size );
   split( config.trainFileName, size, config.tmpdir );
   time_stamp( cout, "   start training "+ toString(size) + " children:" );
@@ -158,6 +171,7 @@ bool experiment<mp_worker>::createWorkers(){
 
 template <>
 bool experiment<mp_worker>::createWorkerFiles(){
+#ifdef HAVE_OPENMP
   if ( size < 1 )
     size = omp_get_max_threads();
   else {
@@ -169,6 +183,10 @@ bool experiment<mp_worker>::createWorkerFiles(){
       size = mt;
     }
   }
+#else
+  cerr << "couldn't get more then 1 thread. No OpenMP support. " << endl;
+  size = 1;
+#endif
   children.resize( size );
   split( config.trainFileName, size, config.tmpdir );
   time_stamp( cout, "   start training "+ toString(size) + " children:" );
@@ -263,6 +281,7 @@ bool experiment<mp_worker>::createWorkersFromFile( const TiCC::CL_Options& opts 
     else
       cerr << "using weightsfile: " << wFile << endl;
   }
+#ifdef HAVE_OPENMP
   omp_set_num_threads( size );
   int mt = omp_get_max_threads();
   if ( mt < size ){
@@ -270,6 +289,10 @@ bool experiment<mp_worker>::createWorkersFromFile( const TiCC::CL_Options& opts 
 	 << size << " )" << endl;
     return false;
   }
+#else
+  cerr << "couldn't set to more then 1 thread. No OpenMP support. " << endl;
+  size = 1;
+#endif
   children.resize( size );
   time_stamp( cout, "   start reading input for "+ toString(size) + " children:" );
   int i;
