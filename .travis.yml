@@ -19,20 +19,28 @@ matrix:
   include:
     - os: linux
       compiler: gcc
+      cache: ccache
+      env:
+        - SCAN=echo
 
     - os: linux
       compiler: clang++
+      cache: ccache
       env:
-        - OPENMPFLAG=--disable-openmp
+       - SCAN=scan-build
+       - OPENMPFLAG=--disable-openmp
 
     - os: osx
       compiler: clang
+      cache: ccache
+      env:
+        - SCAN=echo
 
 
 before_install:
     - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
         sudo apt-get update;
-        sudo apt-get install pkg-config autoconf-archive libicu-dev libxml2-dev libbz2-dev zlib1g-dev libtar-dev libboost-dev libboost-regex-dev;
+        sudo apt-get install pkg-config autoconf-archive ccache cppcheck libicu-dev libxml2-dev libbz2-dev zlib1g-dev libtar-dev libboost-dev libboost-regex-dev;
       fi
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
         brew update;
@@ -43,6 +51,8 @@ before_install:
         brew outdated || brew install bzip2;
         brew outdated || brew install zlib;
         brew install libtar;
+        brew install cppcheck;
+        brew install ccache;
         brew outdated boost || brew upgrade boost;
         brew install llvm;
         export PATH="/usr/local/opt/llvm/bin:$PATH";
@@ -66,7 +76,13 @@ before_install:
 install:
     - bash bootstrap.sh
     - ./configure $OPENMPFLAG
+    - cppcheck --enable=all --quiet --error-exitcode=0 .
+    - $SCAN --status-bugs make
     - make
     - sudo make install
+
 script:
     - LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib make check
+
+after_failure:
+   - cat src/test_suite.log
