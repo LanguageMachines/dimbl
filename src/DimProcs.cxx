@@ -307,12 +307,11 @@ settings::settings( TiCC::CL_Options& opts ){
 inline string curTime(){
   time_t lTime;
   struct tm *curtime;
-  char *time_string;
+  char time_buf[64];
   time(&lTime);
   curtime = localtime(&lTime);
-  time_string = asctime(curtime);
-  time_string[24] = '\0'; // defeat the newline!
-  return time_string;
+  strftime( time_buf, sizeof(time_buf), "%a %b %e %T %Y", curtime );
+  return time_buf;
 }
 
 void time_stamp( ostream& os, const string& line, int number ) {

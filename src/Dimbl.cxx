@@ -342,7 +342,6 @@ int main(int argc, char *argv[]) {
   try {
     TiCC::CL_Options opts;
     opts.init( argc, argv ); // we don't check the arguments for now
-    string value;
     if ( opts.is_present( 'h' ) ){
       usage();
       return EXIT_SUCCESS;
