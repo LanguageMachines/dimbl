@@ -59,14 +59,14 @@ before_install:
         export LDFLAGS="-L/usr/local/opt/llvm/lib";
         export CXXFLAGS="-I/usr/local/opt/llvm/include";
       fi
-    - git clone https://github.com/proycon/ticcutils
+    - git clone https://github.com/LanguageMachines/ticcutils
     - cd ticcutils
     - bash bootstrap.sh
     - ./configure $OPENMPFLAG
     - make
     - sudo make install
     - cd ..
-    - git clone https://github.com/proycon/timbl
+    - git clone https://github.com/LanguageMachines/timbl
     - cd timbl
     - bash bootstrap.sh
     - ./configure $OPENMPFLAG
