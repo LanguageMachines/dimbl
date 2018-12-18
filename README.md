@@ -1,4 +1,4 @@
-dimbl 0.16 (c) CLST/ILK/CLiPS 1998-2016
+dimbl 0.16 (c) CLST/ILK/CLiPS 1998-2019
 
 Distributed Tilburg Memory Based Learner
 
@@ -22,7 +22,7 @@ This software has been tested on:
 - APPLE running OSX 10.5
 
 Compilers:
-- GCC (4.7 - 5.2). The compiler MUST support OpenMP
+- GCC (4.9 - 7). The compiler MUST support OpenMP
 
 Contents of this distribution:
 - sources
