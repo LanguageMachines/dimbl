@@ -23,6 +23,7 @@ This software has been tested on:
 
 Compilers:
 - GCC (4.9 - 7). The compiler MUST support OpenMP
+- CLang (4 - 7). The compiler MUST support OpenMP
 
 Contents of this distribution:
 - sources
