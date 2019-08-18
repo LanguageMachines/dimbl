@@ -55,7 +55,7 @@ CXXFLAGS="$CXXFLAGS $timbl_CFLAGS"
 LIBS="$LIBS $timbl_LIBS"
 
 # Checks for ticcutils library.
-PKG_CHECK_MODULES([ticcutils], [ticcutils >= 0.10] )
+PKG_CHECK_MODULES([ticcutils], [ticcutils >= 0.22] )
 CXXFLAGS="$CXXFLAGS $ticcutils_CFLAGS"
 LIBS="$LIBS $ticcutils_LIBS"
 
