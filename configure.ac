@@ -1,7 +1,7 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ(2.61)
+AC_PREREQ([2.69])
 AC_INIT([dimbl],[0.17],[lamasoftware@science.ru.nl])
 AM_INIT_AUTOMAKE
 AC_CONFIG_SRCDIR([configure.ac])
@@ -22,7 +22,6 @@ fi
 
 # Checks for programs.
 AC_PROG_CXX( [g++] )
-AC_PROG_LIBTOOL
 LT_INIT
 
 # when running tests, use CXX
@@ -64,7 +63,7 @@ AC_C_INLINE
 AC_HEADER_STDBOOL
 AC_TYPE_SIZE_T
 
-AC_OUTPUT([
+AC_CONFIG_FILES([
   Makefile
   m4/Makefile
   docs/Makefile
@@ -73,3 +72,4 @@ AC_OUTPUT([
   include/dimbl/Makefile
   examples/Makefile
 ])
+AC_OUTPUT
