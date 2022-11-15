@@ -247,7 +247,7 @@ template <class working>
 void experiment<working>::initStatistics(){
   if ( config.do_advanced_stats ){
     targets = children[0].exp->myTargets();
-    confusion = new Timbl::ConfusionMatrix( targets->ValuesArray.size() );
+    confusion = new Timbl::ConfusionMatrix( targets->num_of_values() );
   }
 }
 

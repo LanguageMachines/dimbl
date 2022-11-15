@@ -6,7 +6,7 @@ AC_INIT([dimbl],[0.17],[lamasoftware@science.ru.nl])
 AM_INIT_AUTOMAKE
 AC_CONFIG_SRCDIR([configure.ac])
 AC_CONFIG_MACRO_DIR([m4])
-AC_CONFIG_HEADER([config.h])
+AC_CONFIG_HEADERS([config.h])
 
 if test x"${CXXFLAGS+set}" = xset; then
   # the user set CXXFLAGS; don't override it.
@@ -49,7 +49,7 @@ else
 fi
 
 # Checks for timbl library.
-PKG_CHECK_MODULES([timbl], [timbl >= 6.4.4] )
+PKG_CHECK_MODULES([timbl], [timbl >= 6.8] )
 CXXFLAGS="$CXXFLAGS $timbl_CFLAGS"
 LIBS="$LIBS $timbl_LIBS"
 
