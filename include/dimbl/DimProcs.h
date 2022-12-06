@@ -112,7 +112,7 @@ class experiment {
   Timbl::TimblAPI *train;
   Timbl::StatisticsClass stats;
   Timbl::ConfusionMatrix *confusion;
-  const Timbl::Target *targets;
+  const Timbl::Targets *targets;
 };
 
 template <class working>
@@ -246,7 +246,7 @@ void experiment<working>::showResult( Timbl::neighborSet& res,
 template <class working>
 void experiment<working>::initStatistics(){
   if ( config.do_advanced_stats ){
-    targets = children[0].exp->myTargets();
+    targets = &children[0].exp->myTargets();
     confusion = new Timbl::ConfusionMatrix( targets->num_of_values() );
   }
 }
@@ -255,7 +255,7 @@ template <class working>
 void experiment<working>::showStatistics( std::ostream& os ) const {
   os << std::endl;
   if ( confusion )
-    confusion->FScore( os, targets, config.do_class_stats );
+    confusion->FScore( os, *targets, config.do_class_stats );
   os << "overall accuracy:        "
      << stats.testedCorrect()/(double) stats.dataLines()
      << "  (" << stats.testedCorrect() << "/" << stats.dataLines()  << ")" ;
@@ -281,7 +281,7 @@ void experiment<working>::showStatistics( std::ostream& os ) const {
   }
   if ( confusion && config.do_confusion ){
     os << std::endl;
-    confusion->Print( os, targets );
+    confusion->Print( os, *targets );
   }
 }
 
