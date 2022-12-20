@@ -48,6 +48,8 @@ else
     export PKG_CONFIG_PATH="$prefix/lib/pkgconfig:$PKG_CONFIG_PATH"
 fi
 
+AC_OSX_PKG( [icu4c] )
+
 # Checks for timbl library.
 PKG_CHECK_MODULES([timbl], [timbl >= 6.8] )
 CXXFLAGS="$CXXFLAGS $timbl_CFLAGS"
@@ -57,6 +59,10 @@ LIBS="$LIBS $timbl_LIBS"
 PKG_CHECK_MODULES([ticcutils], [ticcutils >= 0.22] )
 CXXFLAGS="$CXXFLAGS $ticcutils_CFLAGS"
 LIBS="$LIBS $ticcutils_LIBS"
+
+PKG_CHECK_MODULES([ICU], [icu-uc >= 50 icu-io] )
+CXXFLAGS="$CXXFLAGS $ICU_CFLAGS"
+LIBS="$ICU_LIBS $LIBS"
 
 AC_CHECK_FUNCS([gettimeofday])
 AC_C_INLINE

@@ -47,7 +47,7 @@ public:
   bool Init( TimblAPI *, const string&, const string&, int );
   bool writeTree( const string& );
   bool readTree( const TiCC::CL_Options&, const string&, const string&, int );
-  bool Execute( const string & );
+  bool Execute( const icu::UnicodeString & );
 };
 
 bool mp_worker::Init( TimblAPI *pnt,
@@ -78,9 +78,9 @@ bool mp_worker::Init( TimblAPI *pnt,
   return true;
 }
 
-bool mp_worker::Execute( const string& line ){
+bool mp_worker::Execute( const icu::UnicodeString& line ){
   result = 0;
-  if ( !line.empty() ){
+  if ( !line.isEmpty() ){
 #ifdef HAVE_OPENMP
 #if DEBUG > 0
 #pragma omp critical
@@ -375,12 +375,12 @@ int main(int argc, char *argv[]) {
     time(&startTime);
     timeval Start;
     gettimeofday( &Start, 0 );
-    string line;
+    UnicodeString line;
     theExp.initStatistics();
     time_stamp( cout, "start testing '" + theExp.config.testFileName + "'" );
-    while ( getline( theExp.config.inp, line ) ){
+    while ( TiCC::getline( theExp.config.inp, line ) ){
       ++lineCount;
-      if ( line.empty() )
+      if ( line.isEmpty() )
 	continue;
       int i;
 #pragma omp parallel for private(i)
