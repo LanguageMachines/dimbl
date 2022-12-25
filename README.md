@@ -1,4 +1,4 @@
-![GitHub build](https://github.com/LanguageMachines/dimbl/actions/workflows/dimbbl.yml/badge.svg?branch=master)](https://github.com/LanguageMachines/dimbl/actions/)
+[![GitHub build](https://github.com/LanguageMachines/dimbl/actions/workflows/dimbl.yml/badge.svg?branch=master)](https://github.com/LanguageMachines/dimbl/actions/)
 [![Language Machines Badge](http://applejack.science.ru.nl/lamabadge.php/dimbl)](http://applejack.science.ru.nl/languagemachines/)
 [![DOI](https://zenodo.org/badge/9028755.svg)](https://zenodo.org/badge/latestdoi/9028755)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
