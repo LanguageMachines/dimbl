@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2006 - 2022
+  Copyright (c) 2006 - 2023
   CLST  - Radboud University
   ILK   - Tilburg University
   CLiPS - University of Antwerp
@@ -72,7 +72,7 @@ public:
   virtual ~worker();
   virtual bool Init( Timbl::TimblAPI *,
 		     const std::string&, const std::string&, int ) = 0;
-  virtual bool Execute( const std::string & ) = 0;
+  virtual bool Execute( const icu::UnicodeString& ) = 0;
   Timbl::TimblAPI *exp;
   int cnt;
   const Timbl::neighborSet *Result() { return result; };
@@ -102,7 +102,7 @@ class experiment {
   virtual bool createWorkersFromFile( const TiCC::CL_Options& );
   virtual bool createWorkerFiles();
   Timbl::neighborSet Finalize();
-  void showResult( Timbl::neighborSet&, const std::string& );
+  void showResult( Timbl::neighborSet&, const icu::UnicodeString& );
   void showProgress( std::ostream&, int, time_t );
   void initStatistics();
   void showStatistics( std::ostream& ) const;
@@ -170,7 +170,7 @@ Timbl::neighborSet experiment<working>::Finalize(){
 
 template <class working>
 void experiment<working>::showResult( Timbl::neighborSet& res,
-				      const std::string& orig ){
+				      const icu::UnicodeString& orig ){
   if ( res.size() == 0 ){
     config.out << orig << " FAILED TEST" << std::endl;
   }

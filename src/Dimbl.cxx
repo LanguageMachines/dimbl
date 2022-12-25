@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2006 - 2022
+  Copyright (c) 2006 - 2023
   CLST  - Radboud University
   ILK   - Tilburg University
   CLiPS - University of Antwerp
@@ -47,7 +47,7 @@ public:
   bool Init( TimblAPI *, const string&, const string&, int );
   bool writeTree( const string& );
   bool readTree( const TiCC::CL_Options&, const string&, const string&, int );
-  bool Execute( const string & );
+  bool Execute( const icu::UnicodeString & );
 };
 
 bool mp_worker::Init( TimblAPI *pnt,
@@ -78,9 +78,9 @@ bool mp_worker::Init( TimblAPI *pnt,
   return true;
 }
 
-bool mp_worker::Execute( const string& line ){
+bool mp_worker::Execute( const icu::UnicodeString& line ){
   result = 0;
-  if ( !line.empty() ){
+  if ( !line.isEmpty() ){
 #ifdef HAVE_OPENMP
 #if DEBUG > 0
 #pragma omp critical
@@ -331,7 +331,7 @@ void usage(){
 }
 
 int main(int argc, char *argv[]) {
-  cerr << "dimbl " << VERSION << " (c) CLST/ILK 1998 - 2022" << endl;
+  cerr << "dimbl " << VERSION << " (c) CLST/ILK 1998 - 2023" << endl;
   cerr << "Centre for Language and Speech Technology, Radboud University" << endl;
   cerr << "Induction of Linguistic Knowledge Research Group, Tilburg University" << endl;
   cerr << "based on [" << Timbl::VersionName() << "]" << endl;
@@ -375,12 +375,12 @@ int main(int argc, char *argv[]) {
     time(&startTime);
     timeval Start;
     gettimeofday( &Start, 0 );
-    string line;
+    UnicodeString line;
     theExp.initStatistics();
     time_stamp( cout, "start testing '" + theExp.config.testFileName + "'" );
-    while ( getline( theExp.config.inp, line ) ){
+    while ( TiCC::getline( theExp.config.inp, line ) ){
       ++lineCount;
-      if ( line.empty() )
+      if ( line.isEmpty() )
 	continue;
       int i;
 #pragma omp parallel for private(i)
