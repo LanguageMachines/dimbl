@@ -14,7 +14,7 @@ on:
 jobs:
   notification:
     runs-on: ubuntu-latest
-    name: Notify start to irc-gitlama
+    name: Notify start to IRC-gitlama
     outputs:
       branch: ${{ steps.extract_branch.outputs.branch }}
     steps:
