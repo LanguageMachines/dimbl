@@ -68,8 +68,9 @@ bool mp_worker::Init( TimblAPI *pnt,
     cerr << "stopped" << endl;
     return false;
   }
-  if ( !wfName.empty() )
+  if ( !wfName.empty() ){
     ok = exp->GetWeights( wfName, exp->CurrentWeighting() );
+  }
   if ( !ok ){
     cerr << "reading weights from " << wfName << " failed " << endl;
     cerr << "stopped" << endl;
@@ -129,8 +130,9 @@ template <>
 bool experiment<mp_worker>::createWorkers(){
   bool ok = true;
 #ifdef HAVE_OPENMP
-  if ( size < 1 )
+  if ( size < 1 ){
     size = omp_get_max_threads();
+  }
   else {
     omp_set_num_threads( size );
     int mt = omp_get_max_threads();
@@ -172,8 +174,9 @@ bool experiment<mp_worker>::createWorkers(){
 template <>
 bool experiment<mp_worker>::createWorkerFiles(){
 #ifdef HAVE_OPENMP
-  if ( size < 1 )
+  if ( size < 1 ){
     size = omp_get_max_threads();
+  }
   else {
     omp_set_num_threads( size );
     int mt = omp_get_max_threads();
@@ -211,8 +214,9 @@ bool experiment<mp_worker>::createWorkerFiles(){
 #if DEBUG > 0
 	cerr << "start saving in" << oname << endl;
 #endif
-	if ( !children[i-1].writeTree( oname ) )
+	if ( !children[i-1].writeTree( oname ) ){
 	  ok[i-1] = false;
+	}
 	else {
 #pragma omp critical
 	  {
@@ -230,8 +234,9 @@ bool experiment<mp_worker>::createWorkerFiles(){
   if ( result ){
     time_stamp( cout, "finished saving trees" );
     string wF =  config.weightsFileName;
-    if ( wF.empty() )
+    if ( wF.empty() ){
       wF = config.treeOutFileName + ".wghts";
+    }
     result = train->SaveWeights( wF );
     if ( !result ){
       cerr << "saving weights in " << wF << " failed " << endl;
@@ -243,8 +248,9 @@ bool experiment<mp_worker>::createWorkerFiles(){
       time_stamp( cout, "filenames stored in: " + config.treeOutFileName );
     }
   }
-  else
+  else {
     time_stamp( cout, "failed saving trees" );
+  }
   return result;
 }
 
@@ -278,8 +284,9 @@ bool experiment<mp_worker>::createWorkersFromFile( const TiCC::CL_Options& opts 
       cerr << "unable to read weightsfile: " << wFile << endl;
       return false;
     }
-    else
+    else {
       cerr << "using weightsfile: " << wFile << endl;
+    }
   }
 #ifdef HAVE_OPENMP
   omp_set_num_threads( size );
@@ -306,8 +313,9 @@ bool experiment<mp_worker>::createWorkersFromFile( const TiCC::CL_Options& opts 
 #if DEBUG > 0
 	cerr << "start " << iname << endl;
 #endif
-	if ( !children[i-1].readTree( opts, iname, wFile, i ))
+	if ( !children[i-1].readTree( opts, iname, wFile, i ) ){
 	  ok[i-1] = false;
+	}
       }
     }
   }
@@ -356,8 +364,9 @@ int main(int argc, char *argv[]) {
 	     << endl;
 	return EXIT_FAILURE;
       }
-      if ( !theExp.createWorkersFromFile( opts ) )
+      if ( !theExp.createWorkersFromFile( opts ) ){
 	return EXIT_FAILURE;
+      }
     }
     else {
       theExp.Train( opts );
@@ -366,9 +375,9 @@ int main(int argc, char *argv[]) {
 	cout << "done." << endl;
 	return EXIT_SUCCESS;
       }
-      else
-	if ( !theExp.createWorkers() )
-	  return EXIT_FAILURE;
+      else if ( !theExp.createWorkers() ){
+	return EXIT_FAILURE;
+      }
     }
     int lineCount = 0;
     time_t startTime;
@@ -380,8 +389,9 @@ int main(int argc, char *argv[]) {
     time_stamp( cout, "start testing '" + theExp.config.testFileName + "'" );
     while ( TiCC::getline( theExp.config.inp, line ) ){
       ++lineCount;
-      if ( line.isEmpty() )
+      if ( line.isEmpty() ){
 	continue;
+      }
       int i;
 #pragma omp parallel for private(i)
       for ( i=0; i < theExp.size; ++i ){

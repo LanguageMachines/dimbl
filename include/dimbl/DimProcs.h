@@ -92,8 +92,8 @@ class experiment {
       throw std::runtime_error( "error in config" );
     }
     size = config.numThreads;
-    train =0;
-    confusion=0;
+    train = 0;
+    confusion = 0;
     targets = 0;
   }
   virtual ~experiment();
@@ -254,8 +254,9 @@ void experiment<working>::initStatistics(){
 template <class working>
 void experiment<working>::showStatistics( std::ostream& os ) const {
   os << std::endl;
-  if ( confusion )
+  if ( confusion ){
     confusion->FScore( os, *targets, config.do_class_stats );
+  }
   os << "overall accuracy:        "
      << stats.testedCorrect()/(double) stats.dataLines()
      << "  (" << stats.testedCorrect() << "/" << stats.dataLines()  << ")" ;
