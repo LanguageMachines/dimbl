@@ -175,12 +175,12 @@ void experiment<working>::showResult( Timbl::neighborSet& res,
     config.out << orig << " FAILED TEST" << std::endl;
   }
   else {
-    const Timbl::ValueDistribution *db
+    const Timbl::ClassDistribution *db
       = res.bestDistribution( config.distanceMetric, config.nn - 1  );
     bool Tie;
     const Timbl::TargetValue *tv = db->BestTarget( Tie );
     if ( Tie ){
-      const Timbl::ValueDistribution *db2
+      const Timbl::ClassDistribution *db2
 	= res.bestDistribution( config.distanceMetric, config.nn  );
       const Timbl::TargetValue *tv2 = db2->BestTarget( Tie );
       if ( !Tie ){
