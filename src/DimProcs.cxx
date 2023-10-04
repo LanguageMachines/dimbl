@@ -74,25 +74,28 @@ void split( const string& file, int num, const string& tmpdir ){
   }
 }
 
-settings::settings( TiCC::CL_Options& opts ){
-  status = true;
-  wFileSpecified=false;
-  distanceMetric = 0;
-  nn = 2;
-  numThreads = 1;
-  do_distance = false;
-  do_distrib = false;
-  do_neighb = false;
-  do_confusion = false;
-  do_class_stats = false;
-  do_advanced_stats = false;
-  beam = 0;
-  progress = 10000;
-  estimate = 0;
-  IF = UnknownInputFormat;
-  tmpdir = "/tmp/";
-  keepfiles = false;
-  string value;
+settings::settings( TiCC::CL_Options& opts ):
+  numThreads(1),
+  tmpdir("/tmp/"),
+  wFileSpecified(false),
+  keepfiles(false),
+  distanceMetric(0),
+  IF(UnknownInputFormat),
+  nn(2),
+  do_distance(false),
+  do_distrib(false),
+  do_neighb(false),
+  do_confusion(false),
+  do_class_stats(false),
+  do_advanced_stats(false),
+  beam(0),
+  progress(10000),
+  estimate(0),
+  status(true)
+
+{
+
+   string value;
   if ( opts.is_present( 'a', value ) ){
     Algorithm tst;
     if ( !string_to(value,tst) || tst != IB1 ){

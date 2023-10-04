@@ -35,7 +35,9 @@
 
 class settings {
  public:
-  settings( TiCC::CL_Options& );
+  explicit settings( TiCC::CL_Options& );
+  const settings& operator=( const settings& )=delete;
+  settings( const settings& )=delete;
   ~settings(){ delete distanceMetric; };
   bool ok() const { return status; };
   int numThreads;
@@ -68,7 +70,8 @@ class settings {
 
 class worker{
 public:
-  worker(){ exp = 0; cnt = 0; };
+  worker():exp(0),cnt(0),result(0)
+  {};
   virtual ~worker();
   virtual bool Init( Timbl::TimblAPI *,
 		     const std::string&, const std::string&, int ) = 0;
@@ -87,7 +90,7 @@ void time_stamp( std::ostream&, const std::string&, int = -1 );
 template <class working>
 class experiment {
  public:
- experiment( TiCC::CL_Options& opts ): config( opts ){
+  explicit experiment( TiCC::CL_Options& opts ): config( opts ){
     if ( !config.ok() ){
       throw std::runtime_error( "error in config" );
     }
@@ -289,12 +292,8 @@ void experiment<working>::showStatistics( std::ostream& os ) const {
 template <class working>
 void experiment<working>::showProgress( std::ostream& os,
 					int line, time_t start ){
-  char time_string[26];
-  struct tm *curtime;
   time_t Time;
-  time_t SecsUsed;
   time_t EstimatedTime;
-  double Estimated;
   int local_progress = config.progress;
 
   if ( ( (line % local_progress ) == 0) || ( line <= 10 ) ||
@@ -304,17 +303,19 @@ void experiment<working>::showProgress( std::ostream& os,
       // check if we are slow, if so, change progress value
       if ( Time - start > 120 ) // more then two minutes
 	// very slow !
-	local_progress = 1000;
+	config.progress = 1000;
     }
     else if ( line == 10000 ){
       if ( Time - start > 600 ) // more then ten minutes
 	// quit slow !
-	local_progress = 10000;
+	config.progress = 10000;
     }
+    struct tm *curtime;
     curtime = localtime(&Time);
     os << "Tested: ";
     os.width(6);
     os.setf(std::ios::right, std::ios::adjustfield);
+    char time_string[26];
     strcpy( time_string, asctime(curtime));
     time_string[24] = '\0';
     os << line << " @ " << time_string;
@@ -322,9 +323,9 @@ void experiment<working>::showProgress( std::ostream& os,
     // Estime time until Estimate.
     //
     if ( config.estimate > 0 ) {
-      SecsUsed = Time - start;
+      time_t SecsUsed = Time - start;
       if ( SecsUsed > 0 ) {
-	Estimated = (SecsUsed / (float)line) *
+	double Estimated = (SecsUsed / (float)line) *
 	  (float)config.estimate;
 	EstimatedTime = (long)Estimated + start;
 	os << ", ";

@@ -47,7 +47,7 @@ public:
   bool Init( TimblAPI *, const string&, const string&, int );
   bool writeTree( const string& );
   bool readTree( const TiCC::CL_Options&, const string&, const string&, int );
-  bool Execute( const icu::UnicodeString & );
+  bool Execute( const icu::UnicodeString& );
 };
 
 bool mp_worker::Init( TimblAPI *pnt,
