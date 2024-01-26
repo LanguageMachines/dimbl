@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2006 - 2023
+  Copyright (c) 2006 - 2024
   CLST  - Radboud University
   ILK   - Tilburg University
   CLiPS - University of Antwerp
@@ -339,7 +339,7 @@ void usage(){
 }
 
 int main(int argc, char *argv[]) {
-  cerr << "dimbl " << VERSION << " (c) CLST/ILK 1998 - 2023" << endl;
+  cerr << "dimbl " << VERSION << " (c) CLST/ILK 1998 - 2024" << endl;
   cerr << "Centre for Language and Speech Technology, Radboud University" << endl;
   cerr << "Induction of Linguistic Knowledge Research Group, Tilburg University" << endl;
   cerr << "based on [" << Timbl::VersionName() << "]" << endl;

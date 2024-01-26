@@ -7,7 +7,7 @@
 Distributed Tilburg Memory Based Learner
 =======================================
 
-    Dimbl utils 0.17 (c) ILK/CLST 1998 - 2023
+    Dimbl utils 0.17 (c) ILK/CLST 1998 - 2024
     by Ko van der Sloot
 
     Tilburg centre for Cognition and Communication, Tilburg University.
