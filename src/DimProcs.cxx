@@ -309,10 +309,9 @@ settings::settings( TiCC::CL_Options& opts ):
 
 inline string curTime(){
   time_t lTime;
-  struct tm *curtime;
   char time_buf[64];
   time(&lTime);
-  curtime = localtime(&lTime);
+  const struct tm *curtime = localtime(&lTime);
   strftime( time_buf, sizeof(time_buf), "%a %b %e %T %Y", curtime );
   return time_buf;
 }
