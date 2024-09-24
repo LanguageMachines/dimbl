@@ -35,12 +35,18 @@ fi
 AC_CHECK_HEADERS([sys/time.h])
 
 PKG_PROG_PKG_CONFIG
+AC_MSG_NOTICE([PKG_CONFIG_PATH=$PKG_CONFIG_PATH])
+if test "x$prefix" = "xNONE"; then
+   prefix="/usr/local"
+fi
+
 if test "x$PKG_CONFIG_PATH" = x; then
     export PKG_CONFIG_PATH="$prefix/lib/pkgconfig"
 else
     export PKG_CONFIG_PATH="$prefix/lib/pkgconfig:$PKG_CONFIG_PATH"
 fi
 
+AC_MSG_NOTICE([PKG_CONFIG_PATH=$PKG_CONFIG_PATH])
 AC_OSX_PKG( [icu4c] )
 
 # Checks for timbl library.
