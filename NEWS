@@ -1,3 +1,9 @@
+0.18 - 2024-12-16
+[Ko van der Sloot]
+* require C++17
+* some code refactoring
+* updated GitHub CI
+
 0.17 - 2023-01-02
 [Ko van der Sloot]
 * adapted to newest Timbl (>= 6.8)
